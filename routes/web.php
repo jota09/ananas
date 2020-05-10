@@ -23,7 +23,7 @@ Route::view('/process', 'process');
 
 Route::any('/postList', 'WallController@index')->name('postList')->middleware('auth');
 
-Route::view('/formCreatePost', 'wall.formCreatePost')->name('formCreatePost')->middleware('auth');
+Route::view('/formcreatepost', 'wall.formcreatepost')->name('formcreatepost')->middleware('auth');
 
 //Route::post('/postCreate', 'WallController@create')->name('postCreate')->middleware('auth');
 

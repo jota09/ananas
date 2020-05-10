@@ -30,7 +30,7 @@
                             <a class="nav-link" href="{{ route('postList') }}">Main Wall</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('formCreatePost') }}">Create Post</a>
+                            <a class="nav-link" href="{{ route('formcreatepost') }}">Create Post</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/process') }}">New Feature</a>
