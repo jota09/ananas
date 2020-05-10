@@ -134,6 +134,7 @@ class WallController extends Controller
      */
     public function createApi(Request $request)
     {
+        //dd("Prueba");
         $id = DB::table('wall')->insertGetId(
             ['ptext' => $request->text, 
              'pby' => $request->by,
