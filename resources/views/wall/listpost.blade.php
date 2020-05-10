@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <div class="title m-b-md">
     <div class="container">
@@ -29,10 +28,11 @@
                         <td>{{ $post->pdate }}</td>
                         <td>
                         @if (Auth::user()->id === $post->pbyid)
-                        <form id="createPost" method="POST" action="{{url('postCreate')}}">
+                        <form id="createPost" method="POST" action="{{url('postList')}}">
                         @csrf
-                            <input type="hidden" name="pid" id="pid" value="{{ $post->pbyid }}">
+                            <input type="hidden" name="pid" id="pid" value="{{ $post->id }}">
                             <input type="hidden" name="pbyid" id="pbyid" value="{{ Auth::user()->id }}">  
+                            <input type="hidden" name="action" id="action" value="delete">  
                             <button type="submit" class="btn btn-warning">-</button>
                         </form>
                         
@@ -49,10 +49,28 @@
         </div>        
         </div>
         </div>
-        
-    </div>
-
-    
+    </div>    
     </div>
 </div>
+@isset($delete)
+<div id="alert" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete action</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{$delete}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" src="{{ asset('js/modal.js') }}" defer></script>
+@endisset
 @endsection

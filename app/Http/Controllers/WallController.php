@@ -5,17 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class WallController extends Controller
 {
+    private $paginationsize = 5;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        switch ($request->action) {
+            case 'create':
+                return $this->create($request);
+                break;
+            case 'delete':
+                return $this->destroy($request);
+                break;
+            default:
+                return $this->getList();
+                break;
+        }
+        
     }
 
     /**
@@ -27,7 +40,7 @@ class WallController extends Controller
     {
      //   $post = DB::table('wall')->orderBy('id')->get();
 
-        $post = DB::table('wall')->orderBy('id')->simplePaginate(5);
+        $post = DB::table('wall')->orderBy('pdate', 'DESC')->simplePaginate($this->paginationsize);
 
         return view('wall.listpost', ['posts' => $post]);
     }
@@ -46,7 +59,7 @@ class WallController extends Controller
              'pbyid' => $request->pbyid
             ]
         );
-        $post = DB::table('wall')->orderBy('id')->simplePaginate(10);
+        $post = DB::table('wall')->orderBy('pdate', 'DESC')->simplePaginate($this->paginationsize);
 
         return view('wall.listpost', ['posts' => $post]);
     }
@@ -102,8 +115,43 @@ class WallController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $message = "";
+        //Compare dates and check if 24 hours passed
+        $post = DB::table('wall')->where('id', '=', $request->pid)->get();
+
+        if($this->getTotalHour($post[0]->pdate)>24){
+            $message = "24 hours have passed since the post was written. You could not delete this post.";
+        }else{
+            $delete = DB::table('wall')
+            ->where('pbyid', '=', $request->pbyid)
+            ->where('id', '=', $request->pid)
+            ->delete();
+            $message = "Successful deletion.";
+        }
+        //dd($message);
+        $post = DB::table('wall')->orderBy('pdate', 'DESC')->simplePaginate($this->paginationsize);
+        return view('wall.listpost', ['posts' => $post,'delete' => ($message==""?"Failed operation":$message)]);
     }
+
+
+    /**
+     * Return total hours between two dates
+     *
+     */
+    public function getTotalHour($base)
+    {
+        $datetime1 = new DateTime($base);
+        $datetime2 = new DateTime("now");
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+        $hours = 0;
+        if($days){
+            $hours += 24 * $days;
+        }
+        $hours += $interval->format('%H');
+        return $hours;
+    }
+
 }

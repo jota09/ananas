@@ -33,7 +33,7 @@
                             <a class="nav-link" href="{{ url('/formCreatePost') }}">Create Post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/process') }}">Busqueda</a>
+                            <a class="nav-link" href="{{ url('/process') }}">New Feature</a>
                         </li>
                     </ul>
                 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: May 10, 2020 at 03:58 AM
+-- Generation Time: May 10, 2020 at 06:54 AM
 -- Server version: 5.7.28
 -- PHP Version: 7.3.12
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -129,7 +129,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Jesus', 'jesus.ramos@entelgy.com', NULL, '$2y$10$guuDzIj5svH7nSsgOw9Rzu2CXW.J9qHBcunjJRGx/Zri6gOEvBHtC', 'bljXDKob3GDv0naMwooTWAz8UMnm7iLEoHyN8q6jjO9vAUpevHweOWbp0sNm', '2020-03-20 14:41:51', '2020-03-20 14:41:51'),
-(2, 'Jesus Ramos', 'jesus.ramos@gmail.com', NULL, '$2y$10$rwmcpiQnt7QpIyGdilRkNuGbuNCkRMTroiW9IJnV6NIoBq1Od51Wi', NULL, '2020-05-09 11:34:40', '2020-05-09 11:34:40');
+(2, 'Jesus Ramos', 'jesus.ramos@gmail.com', NULL, '$2y$10$rwmcpiQnt7QpIyGdilRkNuGbuNCkRMTroiW9IJnV6NIoBq1Od51Wi', NULL, '2020-05-09 11:34:40', '2020-05-09 11:34:40'),
+(3, 'Jhon Michael', 'jhon@gmail.com', NULL, '$2y$10$/r4sywuKkKIW4Ek0ER3LqeC4J8.cIeFcZjEsklSYKvlfJtP7wUk36', NULL, '2020-05-10 01:25:57', '2020-05-10 01:25:57');
 
 -- --------------------------------------------------------
 
@@ -145,20 +146,20 @@ CREATE TABLE IF NOT EXISTS `wall` (
   `pdate` datetime NOT NULL,
   `pbyid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `wall`
 --
 
 INSERT INTO `wall` (`id`, `ptext`, `pby`, `pdate`, `pbyid`) VALUES
-(3, 'Prueba asdasdasd', 'jesus Prueba', '2020-05-09 18:18:24', 0),
-(4, 'Prueba asdasdasd', 'jesus Prueba', '2020-05-09 18:23:57', 0),
-(5, 'Prueba desde el form para crear', 'Jesus Ramos', '2020-05-09 18:46:13', 0),
-(6, 'asdasdasd', 'Jesus Ramos', '2020-05-10 03:38:15', 2),
-(7, 'asdasdasd', 'Jesus Ramos', '2020-05-10 03:41:25', 2),
-(8, 'asdasdasd', 'Jesus Ramos', '2020-05-10 03:43:45', 2),
-(9, 'teste', 'Jesus Ramos', '2020-05-10 03:51:41', 2);
+(23, 'Test of posting', 'Jhon Michael', '2020-05-10 06:27:32', 3),
+(22, 'Checking what I can delete', 'Jesus Ramos', '2020-05-10 06:26:59', 2),
+(19, 'Prueba de eliminacion', 'Jesus Ramos', '2020-05-07 06:23:36', 2),
+(21, 'Test by Jhon', 'Jhon Michael', '2020-05-10 06:26:11', 3),
+(24, 'Checking pagination', 'Jhon Michael', '2020-05-10 06:28:28', 3),
+(25, 'Testing new sorting for result', 'Jesus Ramos', '2020-05-10 06:51:11', 2),
+(15, 'Prueba de enrutamiento', 'Jesus Ramos', '2020-05-10 05:55:35', 2);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

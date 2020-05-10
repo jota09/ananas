@@ -21,10 +21,10 @@ Auth::routes();
 
 Route::view('/process', 'process');
 
-Route::get('/postList', 'WallController@getList')->name('postList')->middleware('auth');
+Route::any('/postList', 'WallController@index')->name('postList')->middleware('auth');
 
 Route::view('/formCreatePost', 'wall.formCreatePost')->middleware('auth');
 
-Route::post('/postCreate', 'WallController@create')->name('postCreate')->middleware('auth');
+//Route::post('/postCreate', 'WallController@create')->name('postCreate')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

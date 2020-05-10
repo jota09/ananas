@@ -10,7 +10,7 @@
             <div class="card">
             <div class="card-header">Create post</div>
             <div class="card-body">
-            <form id="createPost" method="POST" action="{{url('postCreate')}}">
+            <form id="createPost" method="POST" action="{{url('postList')}}">
             @csrf
                 <div class="form-group">
                     <label for="ptext">Post Text</label>
@@ -18,6 +18,7 @@
                 </div> 
                 <input type="hidden" name="pby" id="pby" value="{{ Auth::user()->name }}">
                 <input type="hidden" name="pbyid" id="pbyid" value="{{ Auth::user()->id }}">  
+                <input type="hidden" name="action" id="action" value="create"> 
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
             </div>
