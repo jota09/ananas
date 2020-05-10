@@ -21,6 +21,10 @@ Auth::routes();
 
 Route::view('/process', 'process');
 
-Route::get('/apartmentList', 'ShowApartment@getEntity')->name('apartmentList');
+Route::get('/postList', 'WallController@getList')->name('postList')->middleware('auth');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::view('/formCreatePost', 'wall.formCreatePost')->middleware('auth');
+
+Route::post('/postCreate', 'WallController@create')->name('postCreate')->middleware('auth');
+
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

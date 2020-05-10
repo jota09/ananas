@@ -27,10 +27,10 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('apartmentList') }}">Mi Apartamento</a>
+                            <a class="nav-link" href="{{ route('postList') }}">Main Wall</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/process') }}">Servicios</a>
+                            <a class="nav-link" href="{{ url('/formCreatePost') }}">Create Post</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/process') }}">Busqueda</a>
@@ -38,7 +38,7 @@
                     </ul>
                 </div>
                 <a class="navbar-brand mx-auto" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Laravel Ananas') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

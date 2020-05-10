@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+
 @section('content')
+{{dd($id)}}
 <div class="container">
     <div class="title m-b-md">
-        <component-list-apartment :list-apartment='{{ $apartaments }}'></component-list-apartment>
+        This system is building...
     </div>
 </div>
 @endsection
