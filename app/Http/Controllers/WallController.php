@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 
+use App\Models\WallModel;
+
 class WallController extends Controller
 {
     private $paginationsize = 5;
@@ -28,7 +30,6 @@ class WallController extends Controller
                 return $this->getList();
                 break;
         }
-        
     }
 
     /**
@@ -62,51 +63,6 @@ class WallController extends Controller
         $post = DB::table('wall')->orderBy('pdate', 'DESC')->simplePaginate($this->paginationsize);
 
         return view('wall.listpost', ['posts' => $post]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -152,6 +108,80 @@ class WallController extends Controller
         }
         $hours += $interval->format('%H');
         return $hours;
+    }
+
+/*
+* Api Methods
+*
+*/
+
+
+    /**
+     * Display a listing of the resource from Api.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listApi(Request $request)
+    {
+        $post = DB::table('wall')->orderBy('pdate', 'DESC')->simplePaginate($this->paginationsize, '*','page',$request->page);
+        return response()->json($post,200);
+    }
+
+    /**
+     * Create a post of the resource from Api.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createApi(Request $request)
+    {
+        $id = DB::table('wall')->insertGetId(
+            ['ptext' => $request->text, 
+             'pby' => $request->by,
+             'pdate' => date("Y-m-d H:i:s"),
+             'pbyid' => $request->iduser
+            ]
+        );        
+        return response()->json([
+            "idCreated" => $id,
+            "created_at" => date("Y-m-d H:i:s"),
+        ],200);
+    }
+
+    /**
+     * Create a post of the resource from Api.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteApi(Request $request)
+    {
+
+        $message = "";
+        //Compare dates and check if 24 hours passed
+        $post = DB::table('wall')->where('id', '=', $request->idpostdelete)->get();
+        if(count($post) == 0){
+            $message = "Post does not exist.";
+            return response()->json([
+                "message" => $message,
+            ],400); 
+        }
+        //dd(count($post));
+        if($this->getTotalHour($post[0]->pdate)>24){
+            $message = "24 hours have passed since the post was written. You could not delete this post.";
+        }elseif($post[0]->pbyid != $request->iduser){
+            $message = "You are not owner of ". $request->idpostdelete ." id post. Due to this, you are not able to delete it.";   
+        }else{
+            $delete = DB::table('wall')
+            ->where('pbyid', '=', $request->iduser)
+            ->where('id', '=', $request->idpostdelete)
+            ->delete(); 
+            return response()->json([
+                "deleted" => true,
+                "deleted_at" => date("Y-m-d H:i:s"),
+            ],200);
+        }              
+        return response()->json([
+            "message" => $message,
+        ],400);
     }
 
 }

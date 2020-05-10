@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\Wall as WallResource;
+use App\Models\WallModel as Wall;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/wall/list', 'WallController@listApi');
+Route::post('/wall/сreate', 'WallController@createApi');
+Route::get('/wall/delete', 'WallController@deleteApi');
